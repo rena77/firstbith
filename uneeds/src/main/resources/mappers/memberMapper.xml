@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.MemberMapper">
+
+
+	<insert id="insertMapinfo">
+		INSERT INTO t_test (addr1, addr2, areacode, cat1, cat2, cat3, contentid, contenttypeid, mapx, mapy, readcount, title)
+		VALUES (#{addr1}, #{addr2}, #{areacode}, #{cat1}, #{cat2}, #{cat3}, #{contentid}, #{contenttypeid}, #{mapx}, #{mapy}, #{readcount}, #{title})
+	</insert>
+
+
+</mapper>
+
+
