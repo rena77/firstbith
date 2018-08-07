@@ -7,14 +7,13 @@ import java.net.HttpURLConnection;
 
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +43,16 @@ public class HomeController {
 	@RequestMapping(value = "/viewtest")
 	public String test(Locale locale, Model model) {
 		return "viewtest";
+	}
+	
+	@RequestMapping(value = "/main")
+	public String main(Locale locale, Model model) {
+		return "main";
+	}
+	
+	@RequestMapping(value = "/bookmark")
+	public String bookmark(Locale locale, Model model) {
+		return "bookmark";
 	}
 
 	@RequestMapping(value = "areasidocode", method = RequestMethod.GET)

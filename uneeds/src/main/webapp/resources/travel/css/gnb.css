@@ -257,6 +257,46 @@ a.gnb_my, .gnb_icon {
 	text-align: center
 }
 
+.gnb_btn_bookmark, .gnb_bmbg, .gnb_bmbdr {
+	display: inline-block;
+	width: 60px;
+	height: 20px;
+	font-size: 12px
+}
+
+.gnb_btn_bookmark {
+	position: relative
+}
+
+.gnb_bmbg {
+	background-color: #fff;
+	opacity: 0.05;
+	filter: alpha(opacity = 5);
+}
+
+.gnb_bmbdr {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	width: 58px;
+	height: 20px;
+	border: 1px solid #000;
+	opacity: 0.12;
+	filter: alpha(opacity = 12);
+}
+
+.gnb_bmtxt {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 57px;
+	height: 20px;
+	padding-left: 1px;
+	line-height: 21px;
+	color: #777;
+	text-align: center
+}
+
 .gnb_btn_login:hover {
 	text-decoration: none !important
 }

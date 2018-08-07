@@ -14,18 +14,18 @@ import com.travel.model.TourcodeVO;
 public class MemberDAOImpl implements MemberDAO {
 
 	@Inject
-	private SqlSession sqlSessionMySql;
+	private SqlSession mysqlSession;
 
 	private static final String namespace = "com.travel.MemberMapper";
 
 	@Override
 	public void insertMembers(MemberVO vo) {
-		sqlSessionMySql.insert(namespace + ".isnertMember", vo);
+		mysqlSession.insert(namespace + ".isnertMember", vo);
 	}
 
 	@Override
 	public List<MemberVO> selectMembers() {
-		List<MemberVO> list = sqlSessionMySql.selectList(namespace + ".listMember");
+		List<MemberVO> list = mysqlSession.selectList(namespace + ".listMember");
 		return list;
 	}
 

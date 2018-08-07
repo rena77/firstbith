@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.main.mappers.MainMapper">	<!-- namespace = package / 임의 설정 -->
+	
+	<select id="getTime" resultType="string">
+		select now()
+	</select>
+	
+	<select id="loginidcheck" resultType="String">
+        select * from umemeber_table where mid = ${mid} and pw = ${pw}
+    </select>
+	
+	<select id ="viewuMembers" resultType = "com.main.domain.uMemberVO">
+		select * from umemeber_table where mid = ${mid} and pw = ${pw}
+	</select>
+	
+	<select id="selectOne" resultType="java.util.HashMap">
+        select * from umemeber_table where mid = #{usr}
+    </select>
+
+
+</mapper>

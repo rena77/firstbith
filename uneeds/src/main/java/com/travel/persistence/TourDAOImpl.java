@@ -11,14 +11,14 @@ import com.travel.model.TourcodeVO;
 public class TourDAOImpl implements TourDAO {
 
 	@Inject
-	private SqlSession sqlSessionMySql;
+	private SqlSession mysqlSession;
 
 	private static final String namespace = "com.travel.MemberMapper";
 
 	
 	@Override
 	public void insertMember(TourcodeVO vo) {
-		sqlSessionMySql.insert(namespace + ".insertMapinfo", vo);
+		mysqlSession.insert(namespace + ".insertMapinfo", vo);
 	}
 
 

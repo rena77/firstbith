@@ -54,7 +54,7 @@
 		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property> 
 	</bean>
 	<!-- sqlSessionTemplate의 설정 -->
-	<bean id="sqlSessionMySql" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	<bean id="mysqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="MysqlSessionFactory"></constructor-arg>
 	</bean>
 	<!-- 요청 sqlSessionMySql -->
@@ -63,5 +63,8 @@
 	<context:component-scan base-package="com.travel.persistence"></context:component-scan>
 	<context:component-scan base-package="com.travel.service"></context:component-scan>
 	
+	<!-- 메인 -->
+	<context:component-scan base-package="com.main.persistence"/>
+	<context:component-scan base-package="com.main.service"/>
 
 </beans>

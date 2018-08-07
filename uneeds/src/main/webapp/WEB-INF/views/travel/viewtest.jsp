@@ -142,6 +142,7 @@ var infowindows = []; // 정보 배열
 	function getClickHandler(seq) {
 		return function(e) {
 			var marker = markers[seq], infoWindow = infowindows[seq];
+			
 			if (infoWindow.getMap()) {
 				infoWindow.close();
 			} else {
@@ -165,10 +166,19 @@ var infowindows = []; // 정보 배열
 </script>
 
 <script>
-  function detail(){
-  
+  function detailshowhide(){
+	  
+	  var ul1 = $("#list_place_col");
+	  var ul2= $("#list_place_col1");
+	  
+	  if(ul1.css("display") == "none"){
+		    ul1.show();
+		    ul2.hide();
+		} else {
+		    ul1.hide();
+		    ul2.show();
+		}
   }
-  
 </script>
 
 
@@ -181,17 +191,16 @@ var infowindows = []; // 정보 배열
 		var contenttypeid = item.find("contenttypeid").text();
 		var divlist = $('#listid_'+item.find("contentid").text());
 		
-		var ul1 = $("#list_place_col1");
-		var ul2 = $("#list_place_col2");
+		var ul = $("#list_place_col1");
+		ul.empty();
+		
+		detailshowhide();
 		
 		console.log('#listid_'+item.find("contentid").text());
 		
-		ul1.hide();
-		ul2.show();
-		
 		switch (contenttypeid){
 			case '12' : // 관광지 
-				ul2.append(
+				ul.append(
 					"<li class=list_item type_restaurant=''>" +
 						"<div class=list_item_inner>" +
 								"<span>유모차대여 정보 : </span><span>" + item.find("chkbabycarriage").text()+ "</span></br>" +
@@ -202,11 +211,11 @@ var infowindows = []; // 정보 배열
 						"<div class=list_item_inner>" +
 							"</div>" +
 						"<div class=list_item_inner>" +
-							"<h2>함께 검색한 장소</h2>" +
+							"<h3><span> 함께 검색한 장소 </span></h3>" +
 							"</div>" +
 						"<div class=list_item_inner>" +
-							"<h2>리뷰</h2>" +
-							"</div><button class= test onclick = history.back()>돌아가기</button></li>");
+							"<h3><span> 리뷰 </span></h3>" +
+							"</div><button onclick = javascript:detailshowhide()>돌아가기</button></li>");
 				break;
 			case '14' : // 문화시설
 				divlist.append("<div>" +	item.find("infocenterculture").text() + "</div>");
@@ -235,11 +244,119 @@ var infowindows = []; // 정보 배열
 	}
 </script>
 
+<%-- <script>
+
+$(function(){
+	$(document).on("click",".gnb_btn_bookmark", function() {
+		var id = '<%=session.getAttribute("userid")%>';
+		var trashParam = $(this).attr('id');
+		var idarray = trashParam.split('_');
+		if(id == 'null'){
+			alert("로그인 후 등록해주세요.");
+		}else {
+			alert("등록되었습니다.");
+		}
+		var test = $(".infoarea").attr('data');
+		
+		console.log(test);
+	});
+	
+	$(function(){
+		 $(document).on("click",".infoarea", function() {
+			var ul1 =  $("#list_place_col");
+			var ul2 =  $("#list_place_col_list");
+			
+			var ul1 =  $("#list_place_col");
+			
+			var list = $(this).attr('data');
+			var detailinfo = $(this).attr('data2');
+			var detailinfotype = $(this).attr('data3'); 
+			
+			
+			$.ajax({
+				url : "detailedinformation",
+				type : 'get',
+				datatype : 'json', //respone 데이터 타입
+				data : {
+					"contenttype" : detailinfotype,
+					"contentId" : detailinfo
+					},
+				success :	function(data){
+					detailedinformationlist(data);
+					listClickHandler(list);
+				},
+				error : function(request, status, error){ //에러 함수
+					alert("ERROR");
+				}
+			});
+		});
+	})
+})
+
+
+</script> --%>
+
+<script>
+	function listpage(data){
+		var test1= data.data1.value;
+		var test2= data.data2.value;
+		var test3= data.data3.value;
+		var test = data.input1.value;
+		console.log(test);
+		console.log(test1);
+		console.log(test2);
+		console.log(test3);
+
+		$(document).on("click",".gnb_btn_bookmark", function() {
+			var id = '<%=session.getAttribute("userid")%>';
+			var trashParam = $(this).attr('id');
+			var idarray = trashParam.split('_');
+			if(id == 'null'){
+				alert("로그인 후 등록해주세요.");
+			}else {
+				alert("등록되었습니다.");
+			}
+			var test = $(".infoarea").attr('data');
+
+		});
+		
+		$(document).on("click",".infoarea", function() {
+			var ul1 =  $("#list_place_col");
+			var ul2 =  $("#list_place_col_list");
+			
+			var ul1 =  $("#list_place_col");
+			
+			var list = $(this).attr('data');
+			var detailinfo = $(this).attr('data2');
+			var detailinfotype = $(this).attr('data3'); 
+			
+			
+			$.ajax({
+				url : "detailedinformation",
+				type : 'get',
+				datatype : 'json', //respone 데이터 타입
+				data : {
+					"contenttype" : detailinfotype,
+					"contentId" : detailinfo
+					},
+				success :	function(data){
+					detailedinformationlist(data);
+					listClickHandler(list);
+				},
+				error : function(request, status, error){ //에러 함수
+					alert("ERROR");
+				}
+			});
+		});
+	}
+
+</script>
+
 <!--  시도 구분 -->
 <script>
 	// 시군구 api를 통해서 list를 왼쪽 폴더창에 보여줌
 	function bindList(data){
-		var ul = $("#list_place_col1");
+		var ul = $("#list_place_col");
 		var items = $(data).find("item");
 			ul.empty();
 			for (var i = 0; i < items.length; i++){
@@ -252,14 +369,18 @@ var infowindows = []; // 정보 배열
 											"<img src='" + item.find("firstimage").text() + "' alt= '"+ item.find("title").text()+ "' width='100' height='100'>" +
 										"</div>" +
 										"</a>" +
+										"<form name = form method = get>"+
 										"<div class= info_area>" +
 											"<div class= tit>" +
 												"<span class=tit_inner>" +
-												"<a class = infoarea title='" + item.find("title").text() + "' href= javascript:void(0); onclick=javascript:listClickHandler(Number($(this).attr('data'))); data = '"+ i + "' data2= '" + item.find("contentid").text() + "' data3= '" + item.find("contenttypeid").text() + "'>" +
-												"<span>"+ item.find("title").text() + "</span>" +
-											"</a></span></div>" +
+												"<input class = 'infoarea' type = 'button'  name='input1' value='" + item.find("title").text() + "' onclick= javascript:listpage(this.form); data = '"+ i + "' data2= '" + item.find("contentid").text() + "' data3= '" + item.find("contenttypeid").text() + "'>" +
+											"</input></span></div>" +
 											"<div class = listid  id= 'listid_" + item.find("contentid").text() + "' title= '" + item.find("contentid").text() + "'></div>" +
-										"</div></div></li>");
+												"<input class= 'gnb_btn_bookmark' name='input2' type= 'button'  value ='즐겨찾기' onclick= javascript:listpage(this.form);  id='gnb_bookmark_" + i +"'>" +
+												"<input type='hidden' name = 'data1' class = 'data1' value = '"+ i +"'>" +
+												"<input type='hidden' name = 'data2' class = 'data2' value = '" + item.find("contentid").text() + "'>" +
+												"<input type='hidden' name = 'data3' class = 'data3' value = '" + item.find("contenttypeid").text() + "'>" +
+											"</div></form></div></li>");
 					
 					$.post("insertMapinfo", {
 						addr1 : item.find("addr1").text(),
@@ -275,8 +396,6 @@ var infowindows = []; // 정보 배열
 						readcount : Number(item.find("readcount").text()),
 						title : item.find("title").text()
 					}).done(function(data, state) {
-						console.log(data);
-						console.log(state);
 					});
 			}
 	}		
@@ -359,33 +478,6 @@ var infowindows = []; // 정보 배열
 <!-- 선택시 변경 -->
 <script>
 
-// 상세 정보 show
-$(function(){
-	 $(document).on("click",".infoarea", function() {
-		var ul1 =  $("#list_place_col");
-		var ul2 =  $("#list_place_col_list");
-		
-		var detailinfo = $(this).attr('data2');
-		var detailinfotype = $(this).attr('data3'); 
-		
-		
-		$.ajax({
-			url : "detailedinformation",
-			type : 'get',
-			datatype : 'json', //respone 데이터 타입
-			data : {
-				"contenttype" : detailinfotype,
-				"contentId" : detailinfo
-				},
-			success :	detailedinformationlist,
-			error : function(request, status, error){ //에러 함수
-				alert("ERROR");
-			}
-		});
-	});
-	 
-})
-
 //시도 변경 시 군구 변경
 $(function(){
 	$("#selsido").on("change", function() {
@@ -444,13 +536,9 @@ window.onresize = funLoad;
 <body class="place_list">
 	<!-- header 부분 -->
 	<header id= "header" role="banner">
-		<div class="header_inner">
-			<h1><img class="logo"  src="./resources/img/KakaoTalk_20180710_143413418.png">
-			</h1>
-		</div>	
+			<jsp:include page="topheader.jsp" flush="false"/>
 	</header>
 	<!-- header 부분 -->
-	
 	
 	<!-- container 부분 -->
 	<div id="container" role="main" data-reactroot="">
@@ -489,8 +577,8 @@ window.onresize = funLoad;
 		<div class="placemap_area">
 			<div class="list_wrapper" style="width: 401px;">
 				<div class="list_area" style="height: 700px; overflow-y: auto;">
-					<ul class="list_place_col1" id ="list_place_col1"></ul>
-					<ul class="list_place_col1" id ="list_place_col2" style="display: none;"></ul>
+					<ul class="list_place_col1" id ="list_place_col"></ul>
+					<ul class="list_place_col1" id ="list_place_col1" style="display: none;"></ul>
 		</div>
 		<!-- list 부분 -->
 		
